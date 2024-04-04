@@ -1,0 +1,25 @@
+{
+  "name": "amigo_secreto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:back": "cd backend && npm install",
+    "install:front": "cd frontend && npm install",
+    "install:all": "npm run install:back && npm run install:front",
+    "compose:up": "docker-compose up -d --build",
+    "compose:down": "docker-compose down --remove-orphans"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronaldazevedolima/amigo_secreto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronaldazevedolima/amigo_secreto/issues"
+  },
+  "homepage": "https://github.com/ronaldazevedolima/amigo_secreto#readme"
+}
