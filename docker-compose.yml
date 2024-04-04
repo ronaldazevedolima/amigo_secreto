@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:  
+  back:
+    build:
+      context: ./backend
+    container_name: back-service
+    restart: on-failure
+    working_dir: /app-back
+    tty: true
+    stdin_open: true
+    command: dev
+    environment:
+      - SECRET_JWT=${SECRET_JWT}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_NAME=${DB_NAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - API_PORT_BACK=${API_PORT_BACK}
+    ports:
+      - "${API_PORT_BACK}:${API_PORT_BACK}"
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app-back
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0.23
+    container_name: db-service
+    restart: on-failure
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - database:/var/lib/mysql
+  front:
+    build:
+      context: ./frontend
+    container_name: front-service
+    command: npm run dev
+    working_dir: /app-front
+    environment:
+      - API_BACK_HOST=${API_BACK_HOST}
+    ports:
+      - ${API_PORT_FRONT}:${API_PORT_FRONT}
+    volumes:
+      - ./frontend/src:/app-front/src
+volumes:
+  database:
